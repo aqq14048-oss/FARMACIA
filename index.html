@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>FarmaPRO | Catálogo de Ofertas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <header>
+        <div class="header-top">
+            <div class="logo">
+                <span class="logo-light">FARMA</span><span class="logo-bold">PRO</span>
+            </div>
+            <a href="https://wa.me/5521987911068?text=Vim%20pelo%20site%20e%20quero%20atendimento.%20Pode%20me%20ajudar?" class="btn-whatsapp-top" target="_blank">
+                FALE CONOSCO
+            </a>
+        </div>
+        
+        <h1 class="promo-title"> OFERTAS DO DIA</h1>
+        <div class="delivery-badge"> Entrega rápida</div>
+        <p class="promo-subtitle">Seu catálogo digital de saúde e bem-estar. Peça agora e receba em casa com agilidade.</p>
+
+        <nav class="main-nav">
+            <a href="#shop">Produtos</a>
+            <a href="#sobre">Sobre</a>
+        </nav>
+    </header>
+
+    <div class="search-area">
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="O que você está procurando?" onkeyup="filterProducts()">
+        </div>
+    </div>
+
+    <main id="shop">
+        </main>
+
+    <section id="sobre" class="about-section">
+        <div class="about-container">
+            <h2>Sobre a FarmaPRO</h2>
+            <p>Nossa missão é levar saúde e bem-estar com a conveniência que você merece. Trabalhamos com uma linha completa de medicamentos, cosméticos e vitaminas.</p>
+            <div class="about-details">
+                <p>📍 <strong>Localização:</strong> Atendimento em toda a região (Delivery)</p>
+                <p>📱 <strong>WhatsApp:</strong> (21) 98791-1068</p>
+                <p>📧 <strong>E-mail:</strong> contato@farmapro.com.br</p>
+                <p>⏰ <strong>Horário:</strong> Segunda a Sábado - 08h às 22h</p>
+                <p class="delivery-info"><strong>Entrega rapida</strong></p>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+    <div class="footer-container">
+        <div class="footer-brand">
+            <div class="logo" style="color: white;">
+                <span class="logo-light">FARMA</span><span class="logo-bold">PRO</span>
+            </div>
+            <p>Sua saúde em boas mãos, onde você estiver.</p>
+        </div>
+
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>CONTATO</h4>
+                <p>📞 (21) 98791-1068</p>
+                <p>📧 contato@farmapro.com.br</p>
+            </div>
+            <div class="footer-col">
+                <h4>ATENDIMENTO</h4>
+                <p>Segunda a Sábado</p>
+                <p>08:00 às 22:00</p>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <p>© 2026 Farmácia FarmaPRO. Todos os direitos reservados.</p>
+            <p style="font-size: 10px; opacity: 0.6; margin-top: 10px;">CNPJ: 00.000.000/0001-00 | Imagens meramente ilustrativas.</p>
+        </div>
+    </div>
+</footer>
+    <a href="https://wa.me/5521987911068" class="whatsapp-fixed" target="_blank">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
+    </a>
+
+    <div class="cart-button" onclick="openCart()">
+        <span class="cart-counter" id="cart-count">0</span>
+        🛒
+    </div>
+
+    <div id="product-modal" class="modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 id="modal-p-nome" style="color: var(--primary); font-weight: 800; font-size: 18px;"></h2>
+                <button onclick="closeProductModal()" style="border:none; background:none; font-size:32px; cursor:pointer; color:#999;">&times;</button>
+            </div>
+            <div class="product-modal-body">
+                <div id="modal-p-img" class="img-placeholder-large"></div>
+                <div class="product-modal-info">
+                    <span class="price-now" id="modal-p-price"></span>
+                    <p id="modal-p-desc" class="product-modal-desc"></p>
+                    <div class="modal-controls">
+                        <div class="quantity-selector">
+                            <button onclick="changeModalQty(-1)">-</button>
+                            <span id="modal-qty">1</span>
+                            <button onclick="changeModalQty(1)">+</button>
+                        </div>
+                        <button class="btn-checkout" id="modal-add-btn">ADICIONAR</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+        <div class="modal-card">
+            <div class="modal-header">
+                <h2 style="color: var(--primary); font-weight: 800;">Meu Pedido</h2>
+                <button onclick="closeCart()" style="border:none; background:none; font-size:32px; cursor:pointer; color:#999;">&times;</button>
+            </div>
+
+            <div id="cart-items"></div>
+
+            <div class="total-section">
+                <span>Total:</span>
+                <span id="total-price">R$ 0,00</span>
+            </div>
+
+            <div class="form-group">
+                <input type="text" id="nome" placeholder="Seu Nome Completo">
+                <input type="text" id="endereco" placeholder="Endereço de Entrega (Rua, Número, Bairro)">
+                
+                <label style="font-size: 12px; color: #718096; margin-left: 5px;">Forma de Pagamento:</label>
+                <select id="pagamento" onchange="toggleTroco()">
+                    <option value="Pix">Pix</option>
+                    <option value="Cartão">Cartão (Levamos a maquininha)</option>
+                    <option value="Dinheiro">Dinheiro</option>
+                </select>
+
+                <div id="troco-pergunta" style="display:none; margin: 10px 0;">
+                    <p style="font-size: 13px; font-weight: 600; margin-bottom: 8px;">Precisa de troco?</p>
+                    <div class="radio-group">
+                        <label><input type="radio" name="troco_op" value="nao" checked onchange="handleTrocoVisibility()"> Não preciso</label>
+                        <label><input type="radio" name="troco_op" value="sim" onchange="handleTrocoVisibility()"> Preciso de troco</label>
+                    </div>
+                </div>
+
+                <div id="troco-container">
+                    <input type="text" id="valor-troco" placeholder="Troco para quanto?">
+                </div>
+            </div>
+
+            <button class="btn-checkout" onclick="sendWhatsApp()">
+                FINALIZAR PEDIDO NO WHATSAPP
+            </button>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

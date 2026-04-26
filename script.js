@@ -1,0 +1,241 @@
+const WA_PHONE = "5521987911068"; 
+
+// CÓDIGO ADICIONADO: URL de imagem fictícia para todos (Item 4)
+const imgDefault = "https://cdn-icons-png.flaticon.com/512/3028/3028549.png";
+
+const database = [
+    { id: 1, cat: 'Remédios', nome: 'Dipirona Sódica 500mg', price: 8.90, img: imgDefault },
+    { id: 2, cat: 'Remédios', nome: 'Dorflex 36 Comprimidos', price: 19.90, img: imgDefault },
+    { id: 3, cat: 'Remédios', nome: 'Paracetamol 750mg', price: 11.50, img: imgDefault },
+    { id: 4, cat: 'Remédios', nome: 'Ibuprofeno 600mg', price: 14.90, img: imgDefault },
+    { id: 5, cat: 'Remédios', nome: 'Antigripal MultiSint', price: 12.00, img: imgDefault },
+    { id: 6, cat: 'Remédios', nome: 'Xarope Vick 120ml', price: 26.00, img: imgDefault },
+    { id: 7, cat: 'Remédios', nome: 'Aspirina 500mg 10un', price: 9.00, img: imgDefault },
+    { id: 8, cat: 'Cosméticos', nome: 'Protetor Solar FPS 60', price: 59.90, img: imgDefault },
+    { id: 9, cat: 'Cosméticos', nome: 'Hidratante Neutrogena', price: 39.00, img: imgDefault },
+    { id: 10, cat: 'Cosméticos', nome: 'Sérum Vitamina C 30ml', price: 79.90, img: imgDefault },
+    { id: 11, cat: 'Cosméticos', nome: 'Água Micelar 200ml', price: 22.00, img: imgDefault },
+    { id: 12, cat: 'Cosméticos', nome: 'Gel de Limpeza Facial', price: 34.00, img: imgDefault },
+    { id: 13, cat: 'Cosméticos', nome: 'Shampoo Antiqueda', price: 42.00, img: imgDefault },
+    { id: 14, cat: 'Cosméticos', nome: 'Creme Antirrugas Noite', price: 88.00, img: imgDefault },
+    { id: 15, cat: 'Higiene', nome: 'Sabonete Líquido Protex', price: 12.90, img: imgDefault },
+    { id: 16, cat: 'Higiene', nome: 'Creme Dental Pack 3un', price: 13.50, img: imgDefault },
+    { id: 17, cat: 'Higiene', nome: 'Desodorante Rexona Pack', price: 24.00, img: imgDefault },
+    { id: 18, cat: 'Higiene', nome: 'Fio Dental 50m 2un', price: 9.90, img: imgDefault },
+    { id: 19, cat: 'Higiene', nome: 'Enxaguante Bucal 500ml', price: 18.00, img: imgDefault },
+    { id: 20, cat: 'Higiene', nome: 'Papel Higiênico 12un', price: 17.50, img: imgDefault },
+    { id: 21, cat: 'Higiene', nome: 'Escova de Dente Macia', price: 8.00, img: imgDefault },
+    { id: 22, cat: 'Vitaminas', nome: 'Vitamina C Efervescente', price: 18.00, img: imgDefault },
+    { id: 23, cat: 'Vitaminas', nome: 'Multivitamínico A-Z', price: 49.90, img: imgDefault },
+    { id: 24, cat: 'Vitaminas', nome: 'Ômega 3 1000mg', price: 65.00, img: imgDefault },
+    { id: 25, cat: 'Vitaminas', nome: 'Colágeno Hidrolisado', price: 82.00, img: imgDefault },
+    { id: 26, cat: 'Vitaminas', nome: 'Magnésio Dimalato', price: 38.00, img: imgDefault },
+    { id: 27, cat: 'Vitaminas', nome: 'Vitamina D 2000UI', price: 29.00, img: imgDefault },
+    { id: 28, cat: 'Vitaminas', nome: 'Biotina Cabelos e Unhas', price: 44.00, img: imgDefault }
+];
+
+let cart = [];
+let modalQtyCount = 1;
+
+function init() {
+    const shop = document.getElementById('shop');
+    const categories = [...new Set(database.map(p => p.cat))];
+    let html = "";
+
+    categories.forEach((cat, index) => {
+        const products = database.filter(p => p.cat === cat);
+        html += `
+            <div class="category-section" style="animation-delay: ${index * 0.1}s">
+                <div class="category-header">
+                    <h2 class="category-title">${cat}</h2>
+                    <span class="drag-hint">Arraste para o lado ➔</span>
+                </div>
+                <div class="product-row">
+                    ${products.map(p => `
+                        <div class="product-card" data-name="${p.nome.toLowerCase()}" onclick="openProductModal(${p.id})">
+                            <div class="img-placeholder"><img src="${p.img}"></div>
+                            <p class="prod-name">${p.nome}</p>
+                            <span class="price-now">R$ ${p.price.toFixed(2)}</span>
+                            <div class="product-controls">
+                                <button class="btn-add" onclick="event.stopPropagation(); addToCart(${p.id}, this)">ADICIONAR +</button>
+                                <span id="qtd-${p.id}" class="qtd-badge">0</span>
+                            </div>
+                        </div>
+                    `).join('')}
+                </div>
+            </div>`;
+    });
+    shop.innerHTML = html;
+
+    const trocoInput = document.getElementById('valor-troco');
+    trocoInput.addEventListener('input', function(e) {
+        let value = e.target.value.replace(/\D/g, "");
+        if (value === "") { e.target.value = ""; return; }
+        value = (value / 100).toFixed(2).replace(".", ",");
+        e.target.value = "R$ " + value;
+    });
+}
+
+// CÓDIGO ADICIONADO: Logica Modal Produto (Item 4 e 10)
+function openProductModal(id) {
+    const p = database.find(x => x.id === id);
+    modalQtyCount = 1;
+    document.getElementById('modal-p-nome').innerText = p.nome;
+    document.getElementById('modal-p-price').innerText = `R$ ${p.price.toFixed(2)}`;
+    document.getElementById('modal-p-img').innerHTML = `<img src="${p.img}">`;
+    document.getElementById('modal-p-desc').innerText = `O produto ${p.nome} é excelente para o seu dia a dia, garantindo qualidade e eficácia no seu tratamento ou rotina de cuidados.`;
+    document.getElementById('modal-qty').innerText = modalQtyCount;
+    
+    document.getElementById('modal-add-btn').onclick = () => {
+        for(let i=0; i < modalQtyCount; i++) addToCart(p.id);
+        closeProductModal();
+    };
+
+    document.getElementById('product-modal').style.display = 'flex';
+}
+
+function closeProductModal() { document.getElementById('product-modal').style.display = 'none'; }
+
+function changeModalQty(val) {
+    modalQtyCount += val;
+    if(modalQtyCount < 1) modalQtyCount = 1;
+    document.getElementById('modal-qty').innerText = modalQtyCount;
+}
+
+function addToCart(id, btn) {
+    const item = database.find(p => p.id === id);
+    const inCart = cart.find(p => p.id === id);
+    if (inCart) { inCart.qtd++; } else { cart.push({...item, qtd: 1}); }
+
+    const badge = document.getElementById(`qtd-${id}`);
+    if(badge) {
+        badge.innerText = cart.find(p => p.id === id).qtd + "x";
+        badge.style.display = "block";
+    }
+
+    const cartBtn = document.querySelector('.cart-button');
+    cartBtn.classList.remove('cart-bounce');
+    void cartBtn.offsetWidth; 
+    cartBtn.classList.add('cart-bounce');
+
+    if(btn) {
+        btn.innerText = "ADICIONADO";
+        btn.style.background = "var(--accent)";
+        setTimeout(() => { 
+            btn.innerText = "ADICIONAR +"; 
+            btn.style.background = "var(--primary)";
+        }, 800);
+    }
+    updateUI();
+}
+
+function updateUI() {
+    const totalCount = cart.reduce((a, b) => a + b.qtd, 0);
+    const totalPrice = cart.reduce((a, b) => a + (b.price * b.qtd), 0);
+    document.getElementById('cart-count').innerText = totalCount;
+    document.getElementById('total-price').innerText = `R$ ${totalPrice.toFixed(2).replace('.', ',')}`;
+    
+    const container = document.getElementById('cart-items');
+    container.innerHTML = cart.map(i => `
+        <div class="cart-item">
+            <div class="cart-item-info">
+                <strong>${i.nome}</strong><br>
+                <small>${i.qtd}x R$ ${i.price.toFixed(2)}</small>
+            </div>
+            <button class="btn-remove-item" onclick="remove(${i.id})">Remover</button>
+        </div>
+    `).join('');
+}
+
+function remove(id) {
+    cart = cart.filter(i => i.id !== id);
+    const badge = document.getElementById(`qtd-${id}`);
+    if(badge) { badge.innerText = "0"; badge.style.display = "none"; }
+    updateUI();
+}
+
+function filterProducts() {
+    const term = document.getElementById('searchInput').value.toLowerCase();
+    const cards = document.querySelectorAll('.product-card');
+    const sections = document.querySelectorAll('.category-section');
+    let encontrou = false;
+
+    cards.forEach(card => {
+        const nome = card.getAttribute('data-name');
+        if (nome.includes(term)) { card.style.display = 'flex'; encontrou = true; } 
+        else { card.style.display = 'none'; }
+    });
+
+    sections.forEach(sec => {
+        const hasVisible = Array.from(sec.querySelectorAll('.product-card')).some(c => c.style.display === 'flex');
+        sec.style.display = hasVisible ? 'block' : 'none';
+    });
+
+    // CÓDIGO ADICIONADO: Mensagem Produto Não Encontrado (Item 6)
+    const shop = document.getElementById('shop');
+    let msgErro = document.getElementById('msg-erro-busca');
+    if (!encontrou && term !== "") {
+        if (!msgErro) {
+            msgErro = document.createElement('div');
+            msgErro.id = 'msg-erro-busca';
+            msgErro.style.cssText = "text-align:center; padding:30px; color:#555; grid-column: 1/-1;";
+            shop.appendChild(msgErro);
+        }
+        msgErro.innerHTML = `<p><strong>Não encontramos esse produto 😕</strong><br>Fale com a gente no WhatsApp que verificamos para você.</p><br><a href="https://wa.me/${WA_PHONE}?text=Olá, não achei '${term}'" style="background:var(--accent); color:white; padding:10px 20px; border-radius:30px; text-decoration:none; font-weight:bold;">Chamar no WhatsApp</a>`;
+    } else if (msgErro) { msgErro.remove(); }
+}
+
+function openCart() { document.getElementById('cart-modal').style.display = 'flex'; }
+function closeCart() { document.getElementById('cart-modal').style.display = 'none'; }
+
+// CÓDIGO AJUSTADO: Toggle Troco (Item 2)
+function toggleTroco() {
+    const metodo = document.getElementById('pagamento').value;
+    document.getElementById('troco-pergunta').style.display = (metodo === 'Dinheiro') ? 'block' : 'none';
+    handleTrocoVisibility();
+}
+
+function handleTrocoVisibility() {
+    const choice = document.querySelector('input[name="troco_op"]:checked')?.value;
+    const pag = document.getElementById('pagamento').value;
+    document.getElementById('troco-container').style.display = (pag === 'Dinheiro' && choice === 'sim') ? 'block' : 'none';
+}
+
+function sendWhatsApp() {
+    const nomeInput = document.getElementById('nome');
+    const endInput = document.getElementById('endereco');
+    const pag = document.getElementById('pagamento').value;
+    const trocoVal = document.getElementById('valor-troco').value;
+    const trocoChoice = document.querySelector('input[name="troco_op"]:checked')?.value;
+
+    let isInvalid = false;
+    if (nomeInput.value.trim().length < 3) { nomeInput.classList.add('input-error'); isInvalid = true; } 
+    else { nomeInput.classList.remove('input-error'); }
+    if (endInput.value.trim().length < 5) { endInput.classList.add('input-error'); isInvalid = true; } 
+    else { endInput.classList.remove('input-error'); }
+
+    if (isInvalid) return alert("Preencha os dados de entrega corretamente.");
+    if (cart.length === 0) return alert("Seu carrinho está vazio!");
+
+    let text = `*PEDIDO FARMAPRO*%0A%0A`;
+    text += `*Cliente:* ${nomeInput.value}%0A`;
+    text += `*Endereço:* ${endInput.value}%0A`;
+    text += `*Pagamento:* ${pag}%0A`;
+    
+    // CÓDIGO ADICIONADO: Mensagem de Troco (Item 3)
+    if (pag === 'Dinheiro') {
+        if (trocoChoice === 'sim') {
+            text += `*Troco:* Preciso de troco para ${trocoVal}%0A`;
+        } else {
+            text += `*Troco:* Não preciso de troco%0A`;
+        }
+    }
+
+    text += `%0A*ITENS:*%0A`;
+    cart.forEach(i => text += `- ${i.qtd}x ${i.nome}%0A`);
+    text += `%0A*TOTAL: ${document.getElementById('total-price').innerText}*`;
+
+    window.open(`https://wa.me/${WA_PHONE}?text=${text}`);
+}
+
+document.addEventListener('DOMContentLoaded', init);
