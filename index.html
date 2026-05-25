@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Top Farma | Catálogo De Promoçoes</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+
+    <div class="watermark-bg"></div>
+
+   <header>
+    <div class="header-container">
+        <div class="header-top">
+            <div class="logo">
+                <img src="image/logo.jpeg" alt="TOP FARMA" class="logo-img-header">
+            </div>
+           
+        </div>
+
+       <div class="header-content">
+            <h1 class="promo-title">CATÁLOGO DE OFERTAS</h1>
+            <h2 class="ILI">LIMITADAS COM VENDAS PELO WHATSAPP</h2>
+        <div class="search-container">
+            
+        <div class="search-box">
+            <input type="text" id="searchInput" placeholder="O que está buscando hoje?" oninput="filterProducts()">
+            <span class="search-icon-lupa"><i class="fa-solid fa-magnifying-glass"></i></span>
+        </div>
+     
+    </div>
+    
+    </div>
+   
+</header>
+
+    <section class="search-area">
+    
+
+    <div class="category-circles">
+        <div class="circles-container">
+            <div class="circle-item" onclick="filterByCategory('Antigripal e imunidade')">
+                <div class="circle-img"><img src="image/remedio.jpeg" alt="Remédios"></div>
+                <span>Antigripal e imunidade</span>
+            </div>
+             <div class="circle-item" onclick="filterByCategory('linha infantil')">
+                <div class="circle-img"><img src="image/mamae.jpeg" alt="Mamãe e Bebê"></div>
+                <span>Linha infantil</span>
+            </div>
+            <div class="circle-item" onclick="filterByCategory('Cuidados Capilares')">
+                <div class="circle-img"><img src="image/cosmeticos.jpeg" alt="Cosméticos"></div>
+                <span>Cuidados Capilares</span>
+            </div>
+             </div>
+            <div class="circle-item" onclick="filterByCategory('poli vitaminícos')">
+                <div class="circle-img"><img src="image/remedio.jpeg" alt="Remédios"></div>
+                <span>poli vitaminícos</span>
+            </div>
+           
+        
+    </div>
+</section>
+
+<section class="promo-banner-container">
+    <div class="promo-banner-content" id="main-banner">
+        <img src="image/promo-finetoss.png" alt="Promoção Finetoss" class="img-promo">
+        
+        <div id="cart-ctrl-promo" class="promo-btn-wrapper">
+            </div>
+            
+    </div>
+</section>
+<section class="special-sections">
+    <div class="category-section-header" style="margin-top: 30px;">
+    <div class="scroll-hint">
+        <i class="fa-solid fa-chevron-left"></i>
+        <span>Explore nossos produtos</span>
+        <i class="fa-solid fa-chevron-right"></i>
+    </div>
+</div>
+    <div class="carousel-container">
+        <h2 class="section-title"><i class="fa-solid fa-fire"></i> Destaques do Catálogo</h2>
+        <div class="carousel-track" id="mais-vendidos">
+            </div>
+    </div>
+<div class="category-section-header" style="margin-top: 15px;">
+   
+</div>
+    <img src="image/promo-outra.png" alt="Promoção" class="img-promo">
+    <a href="https://wa.me/5521968603869?text=ola%20tenho%20interesse%20nas%20condicoes%20especiais%20de%203%20unidades" class="whatsapp-btn" target="_blank">
+  Garantir condiçao especial no WhatsApp
+</a>
+</section>
+    <main id="shop" class="main-content"></main>
+
+    <section id="sobre-nos" class="about-section">
+        <div class="about-container">
+            <div class="about-card-premium">
+                <div class="about-header">
+                    <h2>Sobre a Top Farma</h2>
+                    <div class="divider"></div>
+                </div>
+                <p class="about-text-main">
+                  A Drogaria Top Farma está localizada na Rua Democracia Cruzada, em Parada de Lucas, oferecendo medicamentos, produtos de saúde e cuidados pessoais com qualidade, confiança e um atendimento dedicado para você e sua família.</p>
+                <div class="about-details-grid">
+                    <div class="detail-item">
+                        <div class="detail-icon"></div>
+                        <div class="detail-info">
+                            <strong>DELIVERY EXPRESS</strong>
+                            <p>parada de Lucas, vigario geral e cidade alta</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon"></div>
+                        <div class="detail-info">
+                            <strong>WHATSAPP</strong>
+                            <p>(21) 96860-3869</p>
+                        </div>
+                    </div>
+                    <div class="detail-item">
+                        <div class="detail-icon"></div>
+                        <div class="detail-info">
+                            <strong>HORÁRIO</strong>
+                            <p>Seg a Sáb: 07h às 22h</p>
+                            <p>Domingos e Feriados: 08h às 18h</p>
+                        </div>
+                    </div>
+                   
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <footer>
+    <div class="footer-container">
+        <div class="footer-top-content">
+            <img src="image/logo.jpeg" alt="Top Farma" class="logo-img-footer">
+            <p class="footer-slogan">Sua saúde em boas mãos, onde você estiver. Cuidando de você com excelência e rapidez.</p>
+            <p class="footer-cnpj">CNPJ: 13.321.144/0001-92</p> 
+        </div>
+        
+        <div class="footer-grid">
+            <div class="footer-col">
+                <h4>CONTATO</h4>
+                <div class="footer-info-item">
+                    <span>📞</span>
+                    <p>(21) 96860-3869</p>
+                    <p>FAE:</p>
+                </div>
+                <div class="footer-info-item">
+                    <span></span>
+                    <p>drogaria.formosalucas@gmail.com</p>
+                </div>
+            </div>
+            
+            <div class="footer-col">
+                <h4>ATENDIMENTO</h4>
+                <div class="footer-info-item">
+                  <p>Seg a Sáb: 07h às 22h</p>
+                            <p>Domingos e Feriados: 08h às 18h</p>  
+                </div>
+            
+            </div>
+        </div>
+        
+        <div class="footer-bottom">
+            <p>© 2026 Top Farma - Todos os direitos reservados.</p>
+        </div>
+    </div>
+</footer>
+    <div id="product-modal" class="modal">
+        <div class="modal-card">
+            <button class="modal-close" onclick="closeProductModal()">&times;</button>
+            <div class="product-modal-body">
+                <div id="modal-p-img" class="modal-img-container"></div>
+                <div class="product-modal-info">
+                    <h2 id="modal-p-nome"></h2>
+                    <div class="modal-price-tag" id="modal-p-price"></div>
+                    <p id="modal-p-desc" class="product-modal-desc"></p>
+                    
+                    <div class="modal-action-row">
+                        <button class="btn-add-modal" id="modal-add-btn">ADICIONAR AO PEDIDO</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cart-modal" class="modal">
+    <div class="modal-card cart-modal-card">
+        <div class="modal-header">
+            <h2>Seu Carrinho</h2>
+            <button class="modal-close-simple" onclick="closeCart()">&times;</button>
+        </div>
+        
+        <div id="cart-items" class="cart-items-list"></div>
+        
+        <div class="cart-footer">
+            <div class="total-row">
+                <span>Total do Pedido:</span>
+                <strong id="total-price">R$ 0,00</strong>
+            </div>
+
+            <div class="checkout-form">
+                <div class="input-group">
+                    <label>NOME COMPLETO</label>
+                    <input type="text" id="nome" placeholder="Como podemos te chamar?"required>
+                </div>
+
+                <div class="input-group">
+                    <label>ENDEREÇO DE ENTREGA</label>
+                    <input type="text" id="endereco" placeholder="Rua, bairro, etc..."required>
+                </div>
+
+                <div style="display: flex; gap: 10px; margin-bottom: 15px;">
+                    <div style="flex: 1;">
+                        <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--primary);">NÚMERO</label>
+                        <input type="text" id="numero_end" placeholder="Nº" style="width:100%; padding:12px; border:2px solid #E2E8F0; border-radius:10px;"required>
+                    </div>
+                    <div style="flex: 2;">
+                        <label style="display:block; font-size:12px; font-weight:700; margin-bottom:5px; color:var(--primary);">REFERÊNCIA</label>
+                        <input type="text" id="referencia_end" placeholder="Ex: Próximo ao mercado" style="width:100%; padding:12px; border:2px solid #E2E8F0; border-radius:10px;"required>
+                    </div>
+                </div>
+
+                <div class="input-group">
+                    <label>FORMA DE PAGAMENTO</label>
+                    <select id="pagamento" onchange="toggleTroco()">
+                        <option value="Pix">Pix </option>
+                        <option value="Cartão">Cartão (Levamos a máquina)</option>
+                        <option value="Dinheiro">Dinheiro</option>
+                    </select>
+                </div>
+
+                <div id="troco-pergunta" class="troco-box" style="display:none;">
+                    <p>Precisa de troco?</p>
+                    <div class="radio-options">
+                        <label><input type="radio" name="troco_op" value="nao" checked onchange="handleTrocoVisibility()"> Não</label>
+                        <label><input type="radio" name="troco_op" value="sim" onchange="handleTrocoVisibility()"> Sim</label>
+                    </div>
+                    <div id="troco-container" style="display:none; margin-top: 10px;">
+                        <input type="text" id="valor-troco" placeholder="Troco para quanto?"required>
+                    </div>
+                </div>
+            </div>
+
+            <button class="btn-finalize" onclick="sendWhatsApp()">FINALIZAR NO WHATSAPP</button>
+        </div>
+    </div>
+</div>
+    
+    
+    <script src="script.js"></script>
+    <nav class="bottom-nav">
+    <a href="#" onclick="showAll()" class="nav-item">
+        <span><i class="fa-solid fa-house"></i></span>
+        <p>Home</p>
+    </a>
+    
+    <div class="nav-item" onclick="openCart()">
+        <span class="cart-icon-nav"><i class="fa-solid fa-cart-shopping"></i></span>
+        <p>Carrinho</p>
+    </div>
+    <a href="https://wa.me/5521968603869" target="_blank" class="nav-item zap-nav">
+        <span><i class="fa-brands fa-whatsapp"></i></span>
+        <p>Fale Conosco</p>
+    </a>
+</nav>
+<div id="zoomModal" class="zoom-modal" onclick="closeZoom()">
+    <span class="close-zoom">&times;</span>
+    <img class="zoom-content" id="imgZoomed">
+    <div id="caption">Toque para fechar</div>
+</div>
+</body>
+</html> 
